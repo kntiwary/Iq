@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect, reverse
 from . import forms, models
 from django.db.models import Sum
@@ -33,7 +34,9 @@ def student_signup_view(request):
             student.save()
             my_student_group = Group.objects.get_or_create(name='STUDENT')
             my_student_group[0].user_set.add(user)
-        return HttpResponseRedirect('studentlogin')
+            # user.session_set.all().delete()
+        # return HttpResponseRedirect('studentlogin')
+        return render(request, 'student/studentRegistration.html')
     return render(request, 'student/studentsignup.html', context=mydict)
 
 
@@ -44,6 +47,10 @@ def is_student(user):
 @login_required(login_url='studentlogin')
 @user_passes_test(is_student)
 def student_dashboard_view(request):
+    if not request.user.student.is_verified:
+        # request.user.session_set.all().delete()
+        logout(request)
+        return render(request, 'student/studentRegistration.html')
     dict = {
 
         'total_course': QMODEL.Course.objects.all().count(),

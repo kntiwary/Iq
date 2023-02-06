@@ -7,6 +7,7 @@ class Student(models.Model):
     profile_pic = models.ImageField(upload_to='profile_pic/Student/', null=True, blank=True)
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20, null=False)
+    is_verified = models.BooleanField(default=False)
     """
     1 Option
         is_veried(Bool)

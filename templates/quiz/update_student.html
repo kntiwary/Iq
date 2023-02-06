@@ -39,6 +39,11 @@
 <div>
   <form method="post" autocomplete="off" enctype="multipart/form-data" style="margin-left:200px;margin-right:200px;">
       {% csrf_token %}
+
+
+            <label for="is_verified">Verified</label>
+<!--            <input checked="checked" type="checkbox" name="is_verified" id="is_verified" /><br><br>-->
+            <input type="checkbox" name="is_verified" {% if studentForm.is_verified %} checked{% endif %}  /><br><br>
         <label for="first_name">First Name</label>
         {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
         <label for="last_name">Last Name</label>
